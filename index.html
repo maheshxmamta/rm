@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF and Notebook Versions</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      max-width: 1200px;
+      padding: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      background-color: #2d87f0;
+      color: white;
+      padding: 15px 25px;
+      text-align: center;
+      font-size: 16px;
+      border-radius: 8px;
+      width: 200px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin: 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #1a6cdb;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      background-color: #145aa6;
+    }
+
+    .btn-wrapper {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      min-width: 250px;
+      max-width: 300px;
+    }
+
+    .btn-wrapper h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .btn-wrapper p {
+      color: #777;
+      font-size: 14px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <h1>Download PDF and Notebook Versions</h1>
+    <div class="container">
+      <!-- Repeat this block for each file -->
+      <div class="btn-wrapper">
+        <h3>PRACTICAL A</h3>
+   <a class="btn" href="A.pdf" download target="_blank">PDF </a>
+        <a class="btn" href="A.nb" target="_blank">NOTEBOOK </a>
+      </div>
+      
+
+      
+      
+      <!-- Add more sections here -->
+
+    </div>
+  </div>
+
+</body>
+</html>
