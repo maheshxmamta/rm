@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PDF and Notebook Versions</title>
   <style>
     body {
@@ -11,9 +11,32 @@
       padding: 0;
       background-color: #f7f7f7;
       display: flex;
+      flex-direction: column; /* Stack content vertically */
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh; /* Full height */
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .container1 {
+      display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      width: 100%; /* Full width */
+      margin-bottom: 30px; /* Space between image and the content */
+    }
+
+    .practical-image {
+      width: 40vw; /* 40% of viewport width */
+      height: auto; /* Maintain aspect ratio */
+      border-radius: 50%; /* Round border */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
     .container {
@@ -67,49 +90,56 @@
       color: #333;
     }
 
-    .btn-wrapper p {
-      color: #777;
-      font-size: 14px;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 32px;
-      margin-bottom: 40px;
-      color: #333;
-    }
-
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
         align-items: center;
       }
+
+      .practical-image {
+        width: 60vw;  /* Adjust image width for smaller screens */
+      }
     }
   </style>
 </head>
 <body>
-
   <div>
-    <h1>Download PDF and Notebook Versions</h1>
-    <div class="container">
-      <!-- Repeat this block for each file -->
-      <div class="btn-wrapper">
-        <h3>PRACTICAL A</h3>
-   <a class="btn" href="A.pdf" download target="_blank">PDF </a>
-        <a class="btn" href="A.nb" target="_blank">NOTEBOOK </a>
-      </div>
-      <div class="btn-wrapper">
-        <h3>PRACTICAL B</h3>
-   <a class="btn" href="B.pdf" download target="_blank">PDF </a>
-        <a class="btn" href="B.nb" target="_blank">NOTEBOOK </a>
-      </div>
+    <h1>MF !! Practicals</h1>
 
-      
-      
-      <!-- Add more sections here -->
-
+    <!-- Image Container -->
+    <div class="container1">
+      <img src="1.png" alt="Preview Image" class="practical-image" />
     </div>
+
+    <!-- Excel File Download Links -->
+    <div class="container" id="container"></div>
   </div>
 
+  <script>
+    // Define your data array here
+    const files = [
+      { name: 'PRACTICAL 1', excel: '1.xlsx' },
+      { name: 'PRACTICAL 2', excel: '2.xlsx' },
+      { name: 'PRACTICAL 3', excel: '3.xlsx' },
+      { name: 'PRACTICAL 4', excel: '4.xlsx' },
+      { name: 'PRACTICAL 5', excel: '5.xlsx' },
+      { name: 'PRACTICAL 6', excel: '6.xlsx' },
+      { name: 'PRACTICAL 7', excel: '7.xlsx' },
+      { name: 'PRACTICAL 8', excel: '8.xlsx' },
+      { name: 'PRACTICAL 9', excel: '9.xlsx' },
+    ];
+
+    const container = document.getElementById('container');
+
+    files.forEach(file => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'btn-wrapper';
+      wrapper.innerHTML = `
+        <h3>${file.name}</h3>
+        <a class="btn" href="${file.excel}" download target="_blank">Download Excel</a>
+      `;
+      container.appendChild(wrapper);
+    });
+  </script>
 </body>
 </html>
