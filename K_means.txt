@@ -1,0 +1,93 @@
+# Import libraries for data handling
+import pandas as pd                      # For working with data tables
+import numpy as np                       # For numerical operations
+
+# Import visualization library
+import matplotlib.pyplot as plt          # For plotting graphs
+
+# Import dataset and clustering model
+from sklearn.datasets import load_iris   # Built-in dataset for easy use
+from sklearn.cluster import KMeans       # K-Means clustering algorithm
+# Load the Iris dataset
+iris = load_iris()
+
+# Convert dataset into a DataFrame for better readability
+data = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+# Display first 5 rows
+data.head()
+
+# Select only two features for visualization in 2D
+X = data[['sepal length (cm)', 'sepal width (cm)']]
+
+# Create an empty list to store inertia (error values)
+inertia = []
+
+# Define range of k values to test (1 to 10)
+K_range = range(1, 11)
+
+# Loop through different k values
+for k in K_range:
+
+    # Initialize KMeans with k clusters
+    kmeans = KMeans(n_clusters=k, random_state=42)
+
+    # Fit the model on data
+    kmeans.fit(X)
+
+    # Append inertia (sum of squared distances)
+    inertia.append(kmeans.inertia_)
+
+# Plot k values vs inertia
+plt.plot(K_range, inertia, marker='o')
+
+# Label axes
+plt.xlabel('Number of Clusters (k)')
+plt.ylabel('Inertia (Error)')
+
+# Title of graph
+plt.title('Elbow Method to Find Optimal k')
+
+# Show plot
+plt.show()
+
+# Initialize KMeans with optimal k
+kmeans = KMeans(n_clusters=3, random_state=42)
+
+# Fit model and predict cluster labels
+clusters = kmeans.fit_predict(X)
+# Plot data points with cluster colors
+plt.scatter(
+    X.iloc[:, 0],           # X-axis (feature 1)
+    X.iloc[:, 1],           # Y-axis (feature 2)
+    c=clusters              # Color points by cluster
+)
+
+# Plot cluster centroids
+plt.scatter(
+    kmeans.cluster_centers_[:, 0],  # X coordinates of centroids
+    kmeans.cluster_centers_[:, 1],  # Y coordinates of centroids
+    s=200,                          # Size of centroid points
+    marker='X'                      # Marker style
+)
+
+# Add labels
+plt.xlabel('Sepal Length')
+plt.ylabel('Sepal Width')
+plt.title('K-Means Clustering (k = 3)')
+
+# Show plot
+plt.show()
+# Try different k values to see effect
+for k in [2, 3, 5]:
+
+    # Train model
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    clusters = kmeans.fit_predict(X)
+
+    # Plot clusters
+    plt.scatter(X.iloc[:, 0], X.iloc[:, 1], c=clusters)
+    plt.title(f"K-Means with k = {k}")
+    plt.xlabel('Sepal Length')
+    plt.ylabel('Sepal Width')
+    plt.show()

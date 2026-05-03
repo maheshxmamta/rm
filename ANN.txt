@@ -1,0 +1,190 @@
+# Data handling
+import pandas as pd
+import numpy as np
+
+# Visualization
+import matplotlib.pyplot as plt
+
+# Models
+from sklearn.neural_network import MLPClassifier, MLPRegressor
+
+# Dataset
+from sklearn.datasets import load_digits, load_diabetes
+
+# Preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+# Metrics
+from sklearn.metrics import accuracy_score, mean_squared_error
+# Load digits dataset (similar to MNIST but smaller)
+digits = load_digits()
+
+# Features (images flattened into vectors)
+X = digits.data
+
+# Target (digit labels 0–9)
+y = digits.target
+# Split data into training and testing (80-20)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Initialize scaler
+scaler = StandardScaler()
+
+# Fit on training data and transform
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Initialize ANN classifier
+model = MLPClassifier(
+    hidden_layer_sizes=(100,),   # One hidden layer with 100 neurons
+    activation='relu',           # Activation function
+    solver='adam',               # Optimizer
+    learning_rate_init=0.001,    # Learning rate
+    max_iter=50,                 # Number of iterations (epochs)
+    random_state=42
+)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict on test data
+y_pred = model.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+
+print("Accuracy:", accuracy)
+
+# Plot training loss curve (proxy for learning progress)
+plt.plot(model.loss_curve_)
+
+plt.xlabel("Iterations")
+plt.ylabel("Loss")
+plt.title("Training Loss vs Iterations")
+plt.show()
+
+# Try different activation functions
+for act in ['relu', 'logistic', 'tanh']:
+
+    model = MLPClassifier(
+        hidden_layer_sizes=(100,),
+        activation=act,
+        max_iter=50,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+    acc = accuracy_score(y_test, model.predict(X_test))
+
+    print(f"Activation: {act}, Accuracy: {acc}")
+
+# Try different hidden layer sizes
+for hl in [(50,), (100,), (50,50)]:
+
+    model = MLPClassifier(
+        hidden_layer_sizes=hl,
+        max_iter=50,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+    acc = accuracy_score(y_test, model.predict(X_test))
+
+    print(f"Hidden Layers: {hl}, Accuracy: {acc}")
+
+
+
+# Try different optimizers
+for opt in ['adam', 'sgd']:
+
+    model = MLPClassifier(
+        solver=opt,
+        max_iter=50,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+    acc = accuracy_score(y_test, model.predict(X_test))
+
+    print(f"Optimizer: {opt}, Accuracy: {acc}")
+
+
+# Try different learning rates
+for lr in [0.001, 0.01]:
+
+    model = MLPClassifier(
+        learning_rate_init=lr,
+        max_iter=50,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+    acc = accuracy_score(y_test, model.predict(X_test))
+
+    print(f"Learning Rate: {lr}, Accuracy: {acc}")
+
+
+# Enable early stopping
+model = MLPClassifier(
+    early_stopping=True,         # Stops when validation score stops improving
+    validation_fraction=0.2,     # 20% used for validation
+    max_iter=200,
+    random_state=42
+)
+
+model.fit(X_train, y_train)
+
+print("Accuracy:", accuracy_score(y_test, model.predict(X_test)))
+
+
+PART B: ANN for Regression
+
+9. Load Regression Dataset
+
+# Load diabetes dataset (regression problem)
+data = load_diabetes()
+
+X = data.data
+y = data.target
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+# Scale features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+
+# Initialize ANN regressor
+model = MLPRegressor(
+    hidden_layer_sizes=(100,),
+    activation='relu',
+    solver='adam',
+    learning_rate_init=0.001,
+    max_iter=100,
+    random_state=42
+)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict values
+y_pred = model.predict(X_test)
+
+# Calculate Mean Squared Error
+mse = mean_squared_error(y_test, y_pred)
+
+print("Mean Squared Error:", mse)
+
+# Plot loss curve
+plt.plot(model.loss_curve_)
+
+plt.xlabel("Iterations")
+plt.ylabel("Loss")
+plt.title("Regression Loss vs Iterations")
+plt.show()
